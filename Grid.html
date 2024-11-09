@@ -11,6 +11,12 @@
         align-items: center;
         height: 100%;
       }
+      .contentContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 20px;
+      }
       .cellContainer {
         display: flex;
         flex-direction: column;
@@ -38,9 +44,10 @@
       window.onload = (event) => {
         console.log("page is fully loaded");
 
-        let gridContainer = document.getElementById("grid-container");
+        let gridContainer = document.getElementById("gridContainer");
         gridContainer.classList.add("cellContainer");
         
+        getUrl();
         drawGrid(gridContainer);
       };
 
@@ -65,12 +72,23 @@
           }
         }
       }
+    
+      function getUrl() {
+        const url = document.URL;
+        const urlNode = document.getElementById("urlContainer");
+        const urlDiv = document.createElement("div");
+        urlDiv.innerText = `Page url: ${url}`;
+        urlNode.appendChild(urlDiv);
+      }
     </script>
   </head>
 
   <body>
     <div class="pageContainer">
-      <div id="grid-container"></div>
+      <div class="contentContainer">
+        <div id="urlContainer"></div>
+        <div id="gridContainer"></div>
+      </div>
     </div>
   </body>
 </html>
