@@ -1,0 +1,76 @@
+<html>
+  <head>    
+    <style>
+      body {
+        margin: 0px;
+      }
+      .pageContainer {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+      }
+      .cellContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+        background-color: lightgray;
+        border: solid 1px lightgray;
+      }
+      .row {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 1px;
+      }
+      .cell {
+        width: 30px;
+        height: 30px;
+        background-color: white;
+      }
+      .cell:hover {
+        background-color: lightgray;
+      }
+    </style>
+
+    <script>
+      window.onload = (event) => {
+        console.log("page is fully loaded");
+
+        let gridContainer = document.getElementById("grid-container");
+        gridContainer.classList.add("cellContainer");
+        
+        drawGrid(gridContainer);
+      };
+
+      function drawGrid(parentContainer) {
+        const gridHeight = 10;
+        const gridWidth = 10;
+
+        function drawCell() {
+          const cell = document.createElement("div");
+          cell.classList.add("cell");
+          return cell;
+        }
+
+        for(let i = 0; i < gridHeight; i++) {
+          const row = document.createElement("div");
+          row.classList.add("row");
+          parentContainer.append(row);
+
+          for(let j = 0; j < gridWidth; j++) {
+            const childNode = drawCell();
+            row.appendChild(childNode);
+          }
+        }
+      }
+    </script>
+  </head>
+
+  <body>
+    <div class="pageContainer">
+      <div id="grid-container"></div>
+    </div>
+  </body>
+</html>
