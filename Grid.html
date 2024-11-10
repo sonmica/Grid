@@ -39,9 +39,18 @@
         align-items: center;
         font-size: 24px;
         font-family: Consolas, monospace;
+        cursor: default;
       }
       .cell:hover {
         background-color: lightgray;
+      }
+      .black {
+        background-color: black;
+        color: white;
+      }
+      .gray {
+        background-color: #eee;
+        color: black;
       }
     </style>
 
@@ -88,6 +97,13 @@
           if(val !== null) {
             cell.innerText = val;
           }
+          cell.setAttribute("onclick", `cycleColour(this)`);
+          cell.addEventListener("contextmenu", (e) => {
+            e.preventDefault();
+          });
+          cell.addEventListener("auxclick", (e) => {
+            altCycleColour(cell);
+          });
           return cell;
         }
 
@@ -190,6 +206,30 @@
               })
               .flat()
           }
+        }
+      }
+    
+      function cycleColour(node) {
+        // cycle: none -> black -> gray
+        if(node.classList.contains("black")) {
+          node.classList.remove("black");
+          node.classList.add("gray");
+        } else if(node.classList.contains("gray")) {
+          node.classList.remove("gray");
+        } else {
+          node.classList.add("black");
+        }
+      }
+
+      function altCycleColour(node) {
+        // cycle: gray -> black -> none
+        if(node.classList.contains("gray")) {
+          node.classList.remove("gray");
+          node.classList.add("black");
+        } else if(node.classList.contains("black")) {
+          node.classList.remove("black");
+        } else {
+          node.classList.add("gray");
         }
       }
     </script>
