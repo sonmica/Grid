@@ -1,0 +1,58 @@
+
+body {
+    margin: 0px;
+  }
+  .pageContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  .contentContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+  }
+  .cellContainer {
+    display: flex;
+    flex-direction: column;
+    background-color: lightgray;
+    border: 0px solid lightgray;
+    border-top-width: 1px;
+    border-left-width: 1px;
+  }
+  .row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+  .cell {
+
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: white;
+    border: 0px solid lightgray;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+
+    font-size: 24px;
+    font-family: Consolas, monospace;
+    cursor: default;
+  }
+  .cell-hover {
+    background-color: lightgray;
+  }
+  .black {
+    background-color: black;
+    color: white;
+  }
+  .gray {
+    background-color: #eee;
+    color: black;
+  }
