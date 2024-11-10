@@ -127,7 +127,6 @@
 
         function hoverNeighboursOfId(id, width, height, hover = true) {
           const cellArray = getNeighboursOfId(id, width, height);
-          console.log("cellArray", cellArray);
 
           const action = hover ? "add" : "remove";
           cellArray.forEach(cell => cell.classList[action]("cell-hover"));
@@ -138,11 +137,6 @@
           const beside = [id-1, id+1];
           const aboveBelow = [id-width, id+width]
           const diagonal = aboveBelow.map(cellId => [cellId-1, cellId+1]).flat();
-
-          // TODO: it's cool and wonky
-          
-
-          console.log([id, ...beside, ...aboveBelow, ...diagonal]);
 
           const hoverColumn = getColumnById(id, width);
 
