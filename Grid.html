@@ -41,7 +41,7 @@
         font-family: Consolas, monospace;
         cursor: default;
       }
-      .cell:hover {
+      .cell-hover {
         background-color: lightgray;
       }
       .black {
@@ -61,7 +61,7 @@
         let gridContainer = document.getElementById("gridContainer");
         gridContainer.classList.add("cellContainer");
         
-        getUrl();
+        //getUrl();
         const config = getConfig();
         const result = processConfig(config);
         if(!result.success) {
@@ -91,25 +91,73 @@
           }
         }
 
-        function drawCell(val) {
+        function drawCell({index, val, width, height}) {
           const cell = document.createElement("div");
+          cell.id = index;
           cell.classList.add("cell");
           if(val !== null) {
             cell.innerText = val;
           }
-          cell.setAttribute("onclick", `cycleColour(this)`);
+          cell.setAttribute("onclick", "cycleColour(this)");
           cell.addEventListener("contextmenu", (e) => {
             e.preventDefault();
           });
           cell.addEventListener("auxclick", (e) => {
             altCycleColour(cell);
           });
+          cell.onmouseover = (event) => {
+            // cell.classList.add("cell-hover")
+            hoverNeighboursOfId(index, width, height);
+          };
+          cell.onmouseout = (event) => {
+            hoverNeighboursOfId(index, width, height, false);
+          };
           return cell;
         }
 
         function mapDataToCell(config, row, col) {
           const index = row * config.width + col;
-          return config.data[index];
+          return {
+            index,
+            val: config.data[index],
+            width: config.width,
+            height: config.height
+          };
+        }
+
+        function hoverNeighboursOfId(id, width, height, hover = true) {
+          const cellArray = getNeighboursOfId(id, width, height);
+          console.log("cellArray", cellArray);
+
+          const action = hover ? "add" : "remove";
+          cellArray.forEach(cell => cell.classList[action]("cell-hover"));
+        }
+
+        function getNeighboursOfId(id, width, height) {
+          // Raw values
+          const beside = [id-1, id+1];
+          const aboveBelow = [id-width, id+width]
+          const diagonal = aboveBelow.map(cellId => [cellId-1, cellId+1]).flat();
+
+          // TODO: it's cool and wonky
+          
+
+          console.log([id, ...beside, ...aboveBelow, ...diagonal]);
+
+          const hoverColumn = getColumnById(id, width);
+
+          return [id, ...beside, ...aboveBelow, ...diagonal]
+            .filter(cellId => cellId >= 0 && cellId < width * height) // Ignore anything over the boundaries of the grid
+            .filter(cellId => Math.abs(getColumnById(cellId, width) - hoverColumn) < 2) // Ignore anything that is trying to wrap around horizontally
+            .map(cellId => getCellById(cellId));
+
+          function getCellById(id) {
+            return document.getElementById(id);
+          }
+
+          function getColumnById(id, width) {
+            return id % width;
+          }
         }
       }
     
