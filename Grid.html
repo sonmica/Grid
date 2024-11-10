@@ -34,6 +34,11 @@
         width: 30px;
         height: 30px;
         background-color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+        font-family: Consolas, monospace;
       }
       .cell:hover {
         background-color: lightgray;
@@ -72,21 +77,24 @@
           parentContainer.append(rowDiv);
 
           for(let col = 0; col < gridWidth; col++) {
-            const childNode = drawCell();
+            const childNode = drawCell(mapDataToCell(config, row, col));
             rowDiv.appendChild(childNode);
           }
         }
 
-        function drawCell() {
+        function drawCell(val) {
           const cell = document.createElement("div");
           cell.classList.add("cell");
+          if(val !== null) {
+            cell.innerText = val;
+          }
           return cell;
         }
 
-        // function mapDataToCell(config, row, col) {
-        //   const index = data.length
-        //   return data[]
-        // }
+        function mapDataToCell(config, row, col) {
+          const index = row * config.width + col;
+          return config.data[index];
+        }
       }
     
       function getUrl() {
